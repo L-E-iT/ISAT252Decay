@@ -12,7 +12,8 @@ def main():
 
 
 def get_info():
-    print(DecayClass.Decay().get_info())
+    print(DecayClass.Decay().get_isotope())
+    print(DecayClass.Decay().get_mass())
 
 
 main()
