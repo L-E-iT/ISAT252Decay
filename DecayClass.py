@@ -55,5 +55,36 @@ class Decay:
                     check = 1  # adjust check to stop the while loop
         return self.__mass  # return the user input value for mass
 
-    def get_percent(self):
-        print("placeholder")
+    def get_percent(self):  # gets the percent of the mass made up by the isotope
+        check = 0  # set up check for the percent check
+        while check == 0:  # check statement for the percentage input
+            try:  # error handling for the percent input
+                self.__percent = float(input("What is the total percent mass of the material made up by the isotope?\n"
+                                             "(in full percent, ex: 100, 50, 75)\n"
+                                             "====================\n"
+                                             "Enter Value: "))
+                # Input statement for the percent value of the percent mass of the material from the isotope
+            except Exception as Err:
+                print("An unexpected value was entered\n",
+                      Err)  # trap and print error if applicable
+            else:  # executes if there is no error
+                if self.__percent > 0:  # checks the the percentage given is greater than 0
+                    check = 1  # adjusts check so that it will not run again
+        return self.__percent/100  # returns the percent to the main program in decimal format
+
+    def get_activity(self):  # gets the initial radioactivity of the isotope in kBq's, should be positive
+        check = 0  # sets up the check
+        while check == 0:  # sets up the while loop for the check
+            try:  # starting the try/except error catch
+                self.__initial_activity = float(input("What is the initial radioactivity of the isotope?\n"
+                                                      "(In kBq)\n"
+                                                      "====================\n"
+                                                      "Enter Value: "))
+                # Input for the initial activity from the user
+            except Exception as Err:  # checks to make sure the input was valid and so the program will not crash
+                print("An unexpected value was entered\n",
+                      Err)  # inform user if the program has crashed
+            else:  # if there was no error
+                if self.__initial_activity > 0:  # checking to make sure the value entered was above 0
+                    check = 1  # set check to 1 to stop loop
+        return self.__initial_activity  # return the initial activity value

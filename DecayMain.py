@@ -13,7 +13,9 @@ def main():
 
 def get_info():
     print(DecayClass.Decay().get_isotope())
-    print(DecayClass.Decay().get_mass())
+    print(DecayClass.Decay().get_mass(),"kg")
+    print(DecayClass.Decay().get_percent(),"percent in decimal")
+    print(DecayClass.Decay().get_activity(),"kBq")
 
 
 main()
