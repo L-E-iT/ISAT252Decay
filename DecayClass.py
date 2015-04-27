@@ -8,6 +8,8 @@
 import scipy
 import numpy
 import matplotlib
+import math
+import time
 
 
 class Decay:
@@ -16,10 +18,6 @@ class Decay:
         self.__mass = 0  # mass of material containing the radioactive isotope
         self.__percent = 0  # percent of the weight that is made up by the isotope
         self.__initial_activity = 0  # Initial radioactivity of the material
-        self.__half_phosphorus = 14.262  # days
-        self.__half_chromium = 27.7025  # days
-        self.__disposal_constant = 37.00  # disposal constant of the radioactive isotopes
-        self.__decay_constant = 0.693  # decay constant of the radioactive isotope
 
     def activity_per_day(self):  # will contain all mathematical calculations for finding half life
         print("Placeholder for equation")  # placeholder for equations
@@ -60,7 +58,7 @@ class Decay:
         while check == 0:  # check statement for the percentage input
             try:  # error handling for the percent input
                 self.__percent = float(input("What is the total percent mass of the material made up by the isotope?\n"
-                                             "(in full percent, ex: 100, 50, 75)\n"
+                                             "(in decimal percent, ex: 1 = 100%, .5 = 50%)\n"
                                              "====================\n"
                                              "Enter Value: "))
                 # Input statement for the percent value of the percent mass of the material from the isotope
@@ -70,7 +68,7 @@ class Decay:
             else:  # executes if there is no error
                 if self.__percent > 0:  # checks the the percentage given is greater than 0
                     check = 1  # adjusts check so that it will not run again
-        return self.__percent/100  # returns the percent to the main program in decimal format
+        return self.__percent  # returns the percent to the main program in decimal format
 
     def get_activity(self):  # gets the initial radioactivity of the isotope in kBq's, should be positive
         check = 0  # sets up the check
@@ -88,3 +86,4 @@ class Decay:
                 if self.__initial_activity > 0:  # checking to make sure the value entered was above 0
                     check = 1  # set check to 1 to stop loop
         return self.__initial_activity  # return the initial activity value
+
