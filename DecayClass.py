@@ -5,22 +5,12 @@
 #
 
 
-import scipy
-import numpy
-import matplotlib
-import math
-import time
-
-
 class Decay:
     def __init__(self):  # initializing variables for use
         self.__isotope = "isotope"  # name of the isotope that is being investigated
         self.__mass = 0  # mass of material containing the radioactive isotope
         self.__percent = 0  # percent of the weight that is made up by the isotope
         self.__initial_activity = 0  # Initial radioactivity of the material
-
-    def activity_per_day(self):  # will contain all mathematical calculations for finding half life
-        print("Placeholder for equation")  # placeholder for equations
 
     def get_isotope(self):  # gets the name of the isotope
         self.__isotope = str(input("Are we investigating\n- Phosphorus-32\nor\n- Chromium-51\n"
@@ -85,5 +75,5 @@ class Decay:
             else:  # if there was no error
                 if self.__initial_activity > 0:  # checking to make sure the value entered was above 0
                     check = 1  # set check to 1 to stop loop
-        return self.__initial_activity  # return the initial activity value
+        return float(self.__initial_activity)  # return the initial activity value
 

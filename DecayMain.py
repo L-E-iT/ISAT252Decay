@@ -9,8 +9,8 @@ import math
 import DecayClass
 import time
 import scipy
-import numpy
-import matplotlib
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def main():  # defining the main function of the program
@@ -27,9 +27,12 @@ def main():  # defining the main function of the program
     safe_activity = safe(isotope, initial_activity, decay_constant, days_to_decay, half_phosphorus,
                          half_chromium)  # Calculating the safe activity level for the isotope
     print(format(safe_activity, ',.2f'))  # printing out the safe activity for testing
-    activity = activity_level(decay_constant, half_chromium, half_phosphorus, initial_activity, safe_activity,
-                              isotope)  # finding the activity of the isotope each day until it reaches its safe level
+    activity, counter = activity_level(decay_constant, half_chromium, half_phosphorus, initial_activity, safe_activity,
+                                       isotope)
+    # finding the activity of the isotope each day until it reaches its safe level
     print(activity)  # printing out the safe activity for testing
+    print(counter)
+    plot(counter, activity)
 
 
 def get_info():  # Function to get various variables for the program
@@ -70,20 +73,38 @@ def safe(isotope, initial_activity, decay_constant, days_to_decay, half_phosphor
 
 def activity_level(decay_constant, half_chromium, half_phosphorus, initial_activity, safe_activity,
                    isotope):  # function to compute the activity level of the isotope over days
-    activity = initial_activity  # setting initial activity
-    activity_list = [format(activity, ',.2f')]  # preparing a list to store the activity level data
+    activity = float(initial_activity)  # setting initial activity
+    counter = 1
+    counter_list = [1]
+    activity_list = [activity]  # preparing a list to store the activity level data
     if isotope == "Chromium-51":  # checking the isotope type
         while activity > safe_activity:  # while the activity is greater than the safe activity level, run this code
             activity *= math.exp(
                 -(decay_constant / half_chromium))  # set the activity equal to the decay of the previous days activity
             activity_list.append(
-                format(activity, ',.2f'))  # adding that days activity to the activity list and formatting it
-        return activity_list  # returning the activity list
+                activity)  # adding that days activity to the activity list and formatting it
+            counter += 1
+            counter_list.append(int(counter))
+        return activity_list, counter_list  # returning the activity list
     if isotope == "Phosphorus-32":  # same as above for the phosphorus isotope
         while activity > safe_activity:
             activity *= math.exp(-(decay_constant / half_phosphorus))
-            activity_list.append(format(activity, ',.2f'))
-        return activity_list
+            activity_list.append(activity)
+            counter += 1
+            counter_list.append(int(counter))
+        return activity_list, counter_list
+
+
+def plot(counter, activity):  # function to create the box plot
+    fig = plt.figure()  # Setting the figure function equal to "fig"
+    ax = fig.add_subplot(1, 1, 1)  # setting the subplot function equal to "ax"
+    # for n in range(max(counter) + 1):
+        # time.sleep(2)
+    x = counter  # X-axis values. Varies depending the the time to decay
+    y = activity  # Y-axis values. Varies depending on the values of decay
+    ax.bar(x, y, 1)  # creates the bar graph
+
+    plt.show()  # calls a function to display the bar graph to the user
 
 
 main()  # calling the main function to run the program
