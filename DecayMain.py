@@ -7,7 +7,7 @@
 # Importing various modules and packages needed for the program
 import math
 import DecayClass
-import time
+import time as time
 import scipy
 import numpy as np
 import matplotlib.pyplot as plt
@@ -32,7 +32,11 @@ def main():  # defining the main function of the program
     # finding the activity of the isotope each day until it reaches its safe level
     print(activity)  # printing out the safe activity for testing
     print(counter)
-    plot(counter, activity)
+    # choice = input("Enter 1 for Automatic Decay and 2 for Manual Decay:\n")
+    # if choice == 1:
+    # auto_plot(counter, activity)
+    # elif choice == 2:
+    manual_plot(counter, activity)
 
 
 def get_info():  # Function to get various variables for the program
@@ -95,16 +99,29 @@ def activity_level(decay_constant, half_chromium, half_phosphorus, initial_activ
         return activity_list, counter_list
 
 
-def plot(counter, activity):  # function to create the box plot
+def auto_plot(counter, activity):  # function to create the box plot
     fig = plt.figure()  # Setting the figure function equal to "fig"
     ax = fig.add_subplot(1, 1, 1)  # setting the subplot function equal to "ax"
-    # for n in range(max(counter) + 1):
-        # time.sleep(2)
     x = counter  # X-axis values. Varies depending the the time to decay
     y = activity  # Y-axis values. Varies depending on the values of decay
     ax.bar(x, y, 1)  # creates the bar graph
-
+    ax.set_xlabel('Day')
+    ax.set_ylabel('Radioactivity in kBq')
+    ax.set_title('Radioactivity of Isotope per Day')
     plt.show()  # calls a function to display the bar graph to the user
+
+
+def manual_plot(counter, activity):
+    print('placeholder')
+    plt.ion()
+    x = counter  # x-array
+    line = activity
+    for i in range(max(counter)):
+        line.set_ydata()  # update the data
+        plt.draw()  # redraw the canvas
+        time.sleep(0.01)
+    plt.ioff()
+    plt.show()
 
 
 main()  # calling the main function to run the program
