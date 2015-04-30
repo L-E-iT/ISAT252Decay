@@ -1,19 +1,26 @@
-#
 # Programmer: Brian Elliott, Taylor Boyd
 # Started DATE, Last Updated 4/29/15
 # Language: Python 3.4, PyCharm Editor
-#
 
 # Importing various modules and packages needed for the program
 import math
 import DecayClass
 import time as time
-import scipy
-import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
 
 def main():  # defining the main function of the program
+    choice = input("Welcome to the Radioactive Decay Modeling program!\n"
+                   "This program will plot the decay per day of the\n"
+                   "Phosphorus-32 and the Chromium-51 Isotopes!\n"
+                   "If you would like to model one of the isotopes,\n"
+                   "simply enter any value except 1 or press enter\n"
+                   "If you would like to exit this program, input 1\n"
+                   "=====================\n"
+                   "Enter Decision: ")
+    if choice == "1":
+        sys.exit(0)
     half_phosphorus = 14.262  # days
     half_chromium = 27.7025  # days
     disposal_constant = 37.00  # disposal constant of the radioactive isotopes
@@ -31,12 +38,18 @@ def main():  # defining the main function of the program
                                        isotope)
     # finding the activity of the isotope each day until it reaches its safe level
     print(activity)  # printing out the safe activity for testing
-    print(counter)
-    # choice = input("Enter 1 for Automatic Decay and 2 for Manual Decay:\n")
-    # if choice == 1:
-    auto_plot(counter, activity)
-    # elif choice == 2:
-    # manual_plot(counter, activity)
+    print(counter)  # printing out the counter values for testing
+    check = True  # starting boolean decision structure for data validation
+    while check:  # validation check
+        plot_choice = input("Please Enter 1 to plot your decay automatically, or 2 to process manual decay\n"
+                            "=====================\n"
+                            "Enter Decision: ")  # Asking user if they would rather use automatic or manual decay
+        if plot_choice == "1":  # check users method choice
+            auto_plot(counter, activity)  # calls the auto decay function
+            check = False  # fixes validation
+        if plot_choice == "2":  # Does the same as the first check for the manual function
+            manual_plot(counter, activity)
+            check = False
 
 
 def get_info():  # Function to get various variables for the program
@@ -99,18 +112,6 @@ def activity_level(decay_constant, half_chromium, half_phosphorus, initial_activ
         return activity_list, counter_list
 
 
- # def auto_plot(counter, activity):  # function to create the box plot
-   # fig = plt.figure()  # Setting the figure function equal to "fig"
-   # ax = fig.add_subplot(1, 1, 1)  # setting the subplot function equal to "ax"
-   # x = counter  # X-axis values. Varies depending the the time to decay
-   # y = activity  # Y-axis values. Varies depending on the values of decay
-   # ax.bar(x, y, 1)  # creates the bar graph
-   # ax.set_xlabel('Day')
-   # ax.set_ylabel('Radioactivity in kBq')
-   # ax.set_title('Radioactivity of Isotope per Day')
-   # plt.show()  # calls a function to display the bar graph to the user
-
-
 def auto_plot(counter, activity):
     plt.ion()  # needed to haave the decay appear on the graph over time
     for i in range(max(counter)):  # looping through the day count
@@ -122,6 +123,32 @@ def auto_plot(counter, activity):
         time.sleep(0.1)  # tell the graph to wait this long in seconds before continuing with a new bar
     plt.ioff()  # turning off the auto editing system.
     plt.show()  # display the finished graph to the user
+    final_check()
+
+
+def manual_plot(counter, activity):
+    print("Press 'Enter' to process the isotope decay manually.\n"
+          "Each time you press 'Enter', a day of decay will be simulated\n"
+          "=====================\n")
+    n = 0
+    while n <= (max(counter) - 1):
+        pause = input()
+        print("At day", counter[n], "The radioactivity of your isotope is:\n"
+              , activity[n], "kBq")
+        n += 1
+    final_check()
+
+
+def final_check():
+    final = input("\nThank you for using our program! If you would like to run another model\n"
+                  "please input 1 below, if you would like to exit, enter any value or just\n"
+                  "press 'Enter'\n"
+                  "=====================\n"
+                  "Enter Decision: ")
+    if final == "1":
+        main()
+    else:
+        sys.exit(0)
 
 
 main()  # calling the main function to run the program
