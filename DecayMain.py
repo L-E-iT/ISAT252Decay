@@ -1,6 +1,6 @@
 #
 # Programmer: Brian Elliott, Taylor Boyd
-# Started DATE, Last Updated DATE
+# Started DATE, Last Updated 4/29/15
 # Language: Python 3.4, PyCharm Editor
 #
 
@@ -34,9 +34,9 @@ def main():  # defining the main function of the program
     print(counter)
     # choice = input("Enter 1 for Automatic Decay and 2 for Manual Decay:\n")
     # if choice == 1:
-    # auto_plot(counter, activity)
+    auto_plot(counter, activity)
     # elif choice == 2:
-    manual_plot(counter, activity)
+    # manual_plot(counter, activity)
 
 
 def get_info():  # Function to get various variables for the program
@@ -99,29 +99,29 @@ def activity_level(decay_constant, half_chromium, half_phosphorus, initial_activ
         return activity_list, counter_list
 
 
-def auto_plot(counter, activity):  # function to create the box plot
-    fig = plt.figure()  # Setting the figure function equal to "fig"
-    ax = fig.add_subplot(1, 1, 1)  # setting the subplot function equal to "ax"
-    x = counter  # X-axis values. Varies depending the the time to decay
-    y = activity  # Y-axis values. Varies depending on the values of decay
-    ax.bar(x, y, 1)  # creates the bar graph
-    ax.set_xlabel('Day')
-    ax.set_ylabel('Radioactivity in kBq')
-    ax.set_title('Radioactivity of Isotope per Day')
-    plt.show()  # calls a function to display the bar graph to the user
+ # def auto_plot(counter, activity):  # function to create the box plot
+   # fig = plt.figure()  # Setting the figure function equal to "fig"
+   # ax = fig.add_subplot(1, 1, 1)  # setting the subplot function equal to "ax"
+   # x = counter  # X-axis values. Varies depending the the time to decay
+   # y = activity  # Y-axis values. Varies depending on the values of decay
+   # ax.bar(x, y, 1)  # creates the bar graph
+   # ax.set_xlabel('Day')
+   # ax.set_ylabel('Radioactivity in kBq')
+   # ax.set_title('Radioactivity of Isotope per Day')
+   # plt.show()  # calls a function to display the bar graph to the user
 
 
-def manual_plot(counter, activity):
-    print('placeholder')
-    plt.ion()
-    x = counter  # x-array
-    line = activity
-    for i in range(max(counter)):
-        line.set_ydata()  # update the data
-        plt.draw()  # redraw the canvas
-        time.sleep(0.01)
-    plt.ioff()
-    plt.show()
+def auto_plot(counter, activity):
+    plt.ion()  # needed to haave the decay appear on the graph over time
+    for i in range(max(counter)):  # looping through the day count
+        plt.bar(counter[i], activity[i])  # update the data with the radioactivity level at the counter day
+        plt.title('Radioactive Isotope Decay Per Day')  # setting the title for the plot
+        plt.xlabel('Day')  # setting the x-axis title
+        plt.ylabel('Radioactivity in kBq')  # setting the y-axis title
+        plt.draw()  # redraw the canvas with the new values
+        time.sleep(0.1)  # tell the graph to wait this long in seconds before continuing with a new bar
+    plt.ioff()  # turning off the auto editing system.
+    plt.show()  # display the finished graph to the user
 
 
 main()  # calling the main function to run the program

@@ -1,6 +1,6 @@
 #
 # Programmer: Brian Elliott, Taylor Boyd
-# Started DATE, Last Updated DATE
+# Started DATE, Last Updated 4/29/15
 # Language: Python 3.4, PyCharm Editor
 #
 
