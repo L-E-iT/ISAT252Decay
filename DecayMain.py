@@ -11,12 +11,15 @@ import sys
 
 
 def main():  # defining the main function of the program
-    choice = input("Welcome to the Radioactive Decay Modeling program!\n"
+    choice = input("\nWelcome to the Radioactive Decay Modeling program!\n"
                    "This program will plot the decay per day of the\n"
-                   "Phosphorus-32 and the Chromium-51 Isotopes!\n"
+                   "Phosphorus-32 and the Chromium-51 Isotopes until\n"
+                   "They each a safe activity level!\n"
                    "If you would like to model one of the isotopes,\n"
-                   "simply enter any value except 1 or press enter\n"
+                   "simply enter any value except 1 or press 'Enter'\n"
                    "If you would like to exit this program, input 1\n"
+                   "\n"
+                   "Made By: Brian Elliott and Taylor Byrd\n"
                    "=====================\n"
                    "Enter Decision: ")
     if choice == "1":
@@ -27,18 +30,15 @@ def main():  # defining the main function of the program
     decay_constant = 0.693  # decay constant of the radioactive isotope
     isotope, mass, percent, initial_activity, percent_mass = get_info()
     # setting various variables by calling the get_info function
-    days_to_decay = days_decay(half_phosphorus, half_chromium, disposal_constant, decay_constant,
+    days_to_decay = GetDays(half_phosphorus, half_chromium, disposal_constant, decay_constant,
                                # finding the days to decay of the chosen isotope
                                isotope, initial_activity, percent_mass)
-    print(format(days_to_decay, ',.2f'))  # printing out the days for testing
-    safe_activity = safe(isotope, initial_activity, decay_constant, days_to_decay, half_phosphorus,
+    safe_activity = Safe_Activity_Level(isotope, initial_activity, decay_constant, days_to_decay, half_phosphorus,
                          half_chromium)  # Calculating the safe activity level for the isotope
-    print(format(safe_activity, ',.2f'))  # printing out the safe activity for testing
-    activity, counter = activity_level(decay_constant, half_chromium, half_phosphorus, initial_activity, safe_activity,
+    activity, counter = NewIsotopeActivity(decay_constant, half_chromium, half_phosphorus, initial_activity, safe_activity,
                                        isotope)
     # finding the activity of the isotope each day until it reaches its safe level
-    print(activity)  # printing out the safe activity for testing
-    print(counter)  # printing out the counter values for testing
+
     check = True  # starting boolean decision structure for data validation
     while check:  # validation check
         plot_choice = input("Please Enter 1 to plot your decay automatically, or 2 to process manual decay\n"
@@ -62,7 +62,7 @@ def get_info():  # Function to get various variables for the program
     return isotope, mass, percent, initial_activity, percent_mass  # returning values for use in the program
 
 
-def days_decay(half_phosphorus, half_chromium, disposal_constant, decay_constant,
+def GetDays(half_phosphorus, half_chromium, disposal_constant, decay_constant,
                isotope, initial_activity, percent_mass):  # finding the days that it takes for the isotope to decay
     print(percent_mass)  # printing percent mass for testing
     if isotope == "Chromium-51":  # checking for the isotope type
@@ -77,7 +77,7 @@ def days_decay(half_phosphorus, half_chromium, disposal_constant, decay_constant
         return days_to_decay
 
 
-def safe(isotope, initial_activity, decay_constant, days_to_decay, half_phosphorus,
+def Safe_Activity_Level(isotope, initial_activity, decay_constant, days_to_decay, half_phosphorus,
          half_chromium):  # finding the safe level of the isotope for each isotope
     if isotope == "Chromium-51":  # checking for the isotope type
         safe_activity_level = initial_activity * math.exp(
@@ -88,7 +88,7 @@ def safe(isotope, initial_activity, decay_constant, days_to_decay, half_phosphor
         return safe_activity_level
 
 
-def activity_level(decay_constant, half_chromium, half_phosphorus, initial_activity, safe_activity,
+def NewIsotopeActivity(decay_constant, half_chromium, half_phosphorus, initial_activity, safe_activity,
                    isotope):  # function to compute the activity level of the isotope over days
     activity = float(initial_activity)  # setting initial activity
     counter = 1
@@ -123,7 +123,10 @@ def auto_plot(counter, activity):
         time.sleep(0.1)  # tell the graph to wait this long in seconds before continuing with a new bar
     plt.ioff()  # turning off the auto editing system.
     plt.show()  # display the finished graph to the user
+    print("Final Activity\t\tTime For Safe Disposal")
+    print(format(min(activity),',.2f'),"kBq", "\t\t\t",max(counter), "Days")
     final_check()
+
 
 
 def manual_plot(counter, activity):
@@ -136,6 +139,9 @@ def manual_plot(counter, activity):
         print("At day", counter[n], "The radioactivity of your isotope is:\n"
               , activity[n], "kBq")
         n += 1
+
+    print("Final Activity\t\tTime For Safe Disposal")
+    print(format(min(activity),',.2f'),"kBq", "\t\t\t",max(counter), "Days")
     final_check()
 
 
